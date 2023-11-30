@@ -1,14 +1,14 @@
 const INPUT_BOX = document.getElementById("input-text");
 
-const possibleWords = ["hello", "marry", "crane", "crypt", "jazzy", "chaff", "chair", "zebra", "there", "where", "stare", "bears", "pears", "mares", "lofty", "fails", "games", "yacht", "queen"];
+const POSSIBLE_WORDS = ["hello", "marry", "crane", "crypt", "jazzy", "chaff", "chair", "zebra", "there", "where", "stare", "bears", "pears", "mares", "lofty", "fails", "games", "yacht", "queen"];
 
-const answer = possibleWords[Math.floor(Math.random() * possibleWords.length)].toLowerCase();
+const ANSWER = POSSIBLE_WORDS[Math.floor(Math.random() * POSSIBLE_WORDS.length)].toLowerCase();
+const ANSWER_LETTER_OCCURRENCES = countLetterOccurrences(ANSWER);
 
 const GREEN = "#019a01";
 const YELLOW = "#ffc425";
 
 let currentGuess = 1;
-let answerLetterOccurences = countLetterOccurrences(answer);
 
 let inputLetterOccurrences = {};
 
@@ -60,7 +60,7 @@ function enterGuess() {
 }
 
 function checkWin(text) {
-    if (text == answer) {
+    if (text == ANSWER) {
         win();
     }
 
@@ -72,8 +72,8 @@ function checkWin(text) {
 function checkLetter(index, letter, charBox, letterType) {
     if (letterType == "green") {
         for (i = 0; i < 5; i++) {
-            if (answer.charAt(i) == letter && i == index) {
-                if (inputLetterOccurrences[letter] < answerLetterOccurences[letter] || inputLetterOccurrences[letter] === undefined)
+            if (ANSWER.charAt(i) == letter && i == index) {
+                if (inputLetterOccurrences[letter] < ANSWER_LETTER_OCCURRENCES[letter] || inputLetterOccurrences[letter] === undefined)
                 {
                     charBox.style.backgroundColor = GREEN;
                     inputLetterOccurrences = addLetterOccurrences(inputLetterOccurrences, letter);
@@ -81,8 +81,8 @@ function checkLetter(index, letter, charBox, letterType) {
             }
         }
     } else {
-        if (inputLetterOccurrences[letter] < answerLetterOccurences[letter] || inputLetterOccurrences[letter] === undefined) {
-            if (answer.includes(letter) && charBox.style.backgroundColor !== GREEN) {
+        if (inputLetterOccurrences[letter] < ANSWER_LETTER_OCCURRENCES[letter] || inputLetterOccurrences[letter] === undefined) {
+            if (ANSWER.includes(letter) && charBox.style.backgroundColor !== GREEN) {
                 charBox.style.backgroundColor = YELLOW;
                 inputLetterOccurrences = addLetterOccurrences(inputLetterOccurrences, letter);
             }
@@ -96,7 +96,7 @@ function checkLetterForYellow(index, letter, charBox) {
 
 function lastGuess() {
     if (currentGuess > 5) {
-        alert(`You lost. The correct word was ${answer}.`);
+        alert(`You lost. The correct word was ${ANSWER}.`);
     }
 }
 
