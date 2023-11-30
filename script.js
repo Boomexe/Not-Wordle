@@ -2,8 +2,7 @@ const INPUT_BOX = document.getElementById("input-text");
 
 const possibleWords = ["hello", "marry", "crane", "crypt", "jazzy", "chaff", "chair", "zebra", "there", "where", "stare", "bears", "pears", "mares", "lofty", "fails", "games", "yacht", "queen"];
 
-// const answer = possibleWords[Math.floor(Math.random() * possibleWords.length)].toLowerCase();
-const answer = "cheer";
+const answer = possibleWords[Math.floor(Math.random() * possibleWords.length)].toLowerCase();
 
 const GREEN = "#019a01";
 const YELLOW = "#ffc425";
