@@ -4,14 +4,13 @@ const possibleWords = ["hello", "marry", "crane", "crypt", "jazzy", "chaff", "ch
 
 const answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
 
-let currentGuess = 1;
-
-const RED = "#019a01";
+const GREEN = "#019a01";
 const YELLOW = "#ffc425";
+
+let currentGuess = 1;
 
 
 INPUT_BOX.onkeydown = function(e) {
-    console.log("Key: " + e.key);
     if (e.key == "Enter" && INPUT_BOX.value.length == 5) {
         enterGuess();
     }
@@ -30,11 +29,12 @@ function enterGuess() {
         span.innerHTML = char.toUpperCase();
         charBox.style.animation = "fade-in 1s linear";
         checkLetter(i, char, charBox);
+        // console.log(i, char, charBox)
         // wait(1);
     }
 
     checkWin(text);
-    checkLastGuess();
+    lastGuess();
     INPUT_BOX.value = "";
 }
 
@@ -49,9 +49,9 @@ function checkWin(text) {
 }
 
 function checkLetter(index, letter, charBox) {
-    for (i = 0; i < answer.length; i++) {
+    for (i = 0; i < 5; i++) {
         if (answer.charAt(i) == letter && i == index) {
-            charBox.style.backgroundColor = RED;
+            charBox.style.backgroundColor = GREEN;
             return;
         }
     }
@@ -61,7 +61,7 @@ function checkLetter(index, letter, charBox) {
     }
 }
 
-function checkLastGuess() {
+function lastGuess() {
     if (currentGuess > 5) {
         alert(`You lost. The correct word was ${answer}.`);
     }
