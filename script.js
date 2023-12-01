@@ -3,8 +3,16 @@ const INPUT_BOX = document.getElementById("input-text");
 
 const POSSIBLE_WORDS = ["hello", "marry", "crane", "crypt", "jazzy", "chaff", "chair", "zebra", "there", "where", "stare", "bears", "pears", "mares", "lofty", "fails", "games", "yacht", "queen"];
 
-const ANSWER = POSSIBLE_WORDS[Math.floor(Math.random() * POSSIBLE_WORDS.length)].toLowerCase();
-const ANSWER_LETTER_OCCURRENCES = countLetterOccurrences(ANSWER);
+let answer = getRandomWord("api");
+let answerLetterOccurrences = "";
+
+/* 
+FOR DEBUGGING
+*/
+
+// let answer = "cheer";
+// let answerLetterOccurrences = countLetterOccurrences(answer);
+// INPUT_BOX.removeAttribute("readonly");
 
 const GREEN = "#019a01";
 const YELLOW = "#ffc425";
@@ -69,7 +77,7 @@ function enterGuess() {
 }
 
 function checkWin(text) {
-    if (text == ANSWER) {
+    if (text == answer) {
         win();
     }
 
@@ -81,8 +89,8 @@ function checkWin(text) {
 function checkLetter(index, letter, charBox, letterType) {
     if (letterType == "green") {
         for (i = 0; i < 5; i++) {
-            if (ANSWER.charAt(i) == letter && i == index) {
-                if (inputLetterOccurrences[letter] < ANSWER_LETTER_OCCURRENCES[letter] || inputLetterOccurrences[letter] === undefined)
+            if (answer.charAt(i) == letter && i == index) {
+                if (inputLetterOccurrences[letter] < answerLetterOccurrences[letter] || inputLetterOccurrences[letter] === undefined)
                 {
                     charBox.style.backgroundColor = GREEN;
                     inputLetterOccurrences = addLetterOccurrences(inputLetterOccurrences, letter);
@@ -90,8 +98,8 @@ function checkLetter(index, letter, charBox, letterType) {
             }
         }
     } else {
-        if (inputLetterOccurrences[letter] < ANSWER_LETTER_OCCURRENCES[letter] || inputLetterOccurrences[letter] === undefined) {
-            if (ANSWER.includes(letter) && charBox.style.backgroundColor !== GREEN) {
+        if (inputLetterOccurrences[letter] < answerLetterOccurrences[letter] || inputLetterOccurrences[letter] === undefined) {
+            if (answer.includes(letter)) { //&& charBox.style.backgroundColor !== GREEN) {
                 charBox.style.backgroundColor = YELLOW;
                 inputLetterOccurrences = addLetterOccurrences(inputLetterOccurrences, letter);
             }
@@ -101,12 +109,16 @@ function checkLetter(index, letter, charBox, letterType) {
 
 function lastGuess() {
     if (currentGuess > MAX_GUESSES) {
-        alert(`You lost. The correct word was ${ANSWER}.`);
+        setTimeout(() => {
+            alert(`You lost. The correct word was ${answer}.`); 
+        }, 25);
     }
 }
 
 function win() {
-    setTimeout(function() { alert(`You won in ${currentGuess} guesses!`); }, 10);
+    setTimeout(() => {
+        alert(`You won in ${currentGuess} guesses!`); 
+    }, 25);
 }
 
 function countLetterOccurrences(inputString) {
@@ -131,4 +143,41 @@ function addLetterOccurrences(inputObj, letter) {
     }
 
     return inputObj;
+}
+
+function getRandomWord(type) {
+    if (type == "local") {
+        INPUT_BOX.removeAttribute("readonly");
+        answer = getLocalWord();
+    }
+
+    fetch("https://random-word-api.herokuapp.com/word?length=5&lang=en")
+    .then(response => {
+        if (!response.ok) {
+            console.error(`HTTP Error: Status: ${response.status}. Getting local word instead`);
+            answer = getLocalWord();
+            INPUT_BOX.removeAttribute("readonly");
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        const requestText = data[0];
+        answer = requestText;
+        answerLetterOccurrences = countLetterOccurrences(answer);
+        INPUT_BOX.removeAttribute("readonly");
+
+        return requestText;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        answer = getLocalWord();
+        INPUT_BOX.removeAttribute("readonly");
+    });
+}
+
+function getLocalWord() {
+    const ANSWER = POSSIBLE_WORDS[Math.floor(Math.random() * POSSIBLE_WORDS.length)].toLowerCase();
+
+    return ANSWER;
 }
