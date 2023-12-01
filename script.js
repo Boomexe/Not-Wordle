@@ -1,3 +1,4 @@
+const INPUT_CONTAINER = document.getElementById("input-container");
 const INPUT_BOX = document.getElementById("input-text");
 
 const POSSIBLE_WORDS = ["hello", "marry", "crane", "crypt", "jazzy", "chaff", "chair", "zebra", "there", "where", "stare", "bears", "pears", "mares", "lofty", "fails", "games", "yacht", "queen"];
@@ -20,6 +21,11 @@ INPUT_BOX.onkeydown = function(e) {
 
 function enterGuess() {
     if (INPUT_BOX.value.length !== 5) {
+        INPUT_BOX.style.animation = "input-shake 0.25s linear"
+
+        setTimeout(() => {
+            INPUT_BOX.style.animation = "";
+        }, 500)
         return;
     }
 
@@ -35,10 +41,10 @@ function enterGuess() {
         let char = text.charAt(i);
         
         let charBox = document.getElementById(`r${currentGuess}`).getElementsByTagName("td")[i];
-
+        
         span = charBox.getElementsByTagName("span")[0];
         span.innerHTML = char.toUpperCase();
-        charBox.style.animation = "fade-in 1s linear";
+        span.style.animation = "fade-in 1s linear";
         checkLetter(i, char, charBox, "green");
 
     }
@@ -88,10 +94,6 @@ function checkLetter(index, letter, charBox, letterType) {
             }
         }
     }
-}
-
-function checkLetterForYellow(index, letter, charBox) {
-    
 }
 
 function lastGuess() {

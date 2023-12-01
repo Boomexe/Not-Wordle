@@ -41,6 +41,7 @@ td {
     border:solid;
     border-width: 2px;
     align-items: stretch;
+    /* border-color: off; */
 }
 
 /* span {
@@ -62,6 +63,15 @@ td {
     width: 60px;
 }
 
+.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    
+    -ms-user-select: none;
+    user-select: none;
+ }
+
 @keyframes fade-in {
     0% {
         opacity: 0%;
@@ -69,5 +79,22 @@ td {
 
     100% {
         opacity: 100%;
+    }
+}
+
+@keyframes input-shake {
+    0% {
+        transform: translateX(0);
+        color: #F5F9FC;
+    }
+    25% { transform: translateX(5px); }
+    50% {
+        transform: translateX(-5px);
+        color: red;
+    }
+    75% { transform: translateX(5px); }
+    100% {
+        transform: translateX(0);
+        color: #F5F9FC;
     }
 }
