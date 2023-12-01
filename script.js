@@ -10,6 +10,7 @@ const GREEN = "#019a01";
 const YELLOW = "#ffc425";
 
 let currentGuess = 1;
+const MAX_GUESSES = 6;
 
 let inputLetterOccurrences = {};
 
@@ -97,7 +98,7 @@ function checkLetter(index, letter, charBox, letterType) {
 }
 
 function lastGuess() {
-    if (currentGuess > 5) {
+    if (currentGuess > MAX_GUESSES) {
         alert(`You lost. The correct word was ${ANSWER}.`);
     }
 }
