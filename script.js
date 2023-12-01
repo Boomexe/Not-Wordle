@@ -22,7 +22,7 @@ INPUT_BOX.onkeydown = function(e) {
 
 function enterGuess() {
     if (INPUT_BOX.value.length !== 5) {
-        INPUT_BOX.style.animation = "input-shake 0.25s linear"
+        INPUT_BOX.style.animation = "input-shake 0.25s ease-out"
 
         setTimeout(() => {
             INPUT_BOX.style.animation = "";
@@ -45,6 +45,8 @@ function enterGuess() {
         
         span = charBox.getElementsByTagName("span")[0];
         span.innerHTML = char.toUpperCase();
+        charBox.style.borderColor = "rgba(0, 0, 0, 0)";
+        charBox.style.backgroundColor = "#3C445C";
         span.style.animation = "fade-in 1s linear";
         checkLetter(i, char, charBox, "green");
 

@@ -41,7 +41,7 @@ td {
     border:solid;
     border-width: 2px;
     align-items: stretch;
-    /* border-color: off; */
+    border-color: #3C445C;
 }
 
 /* span {
